@@ -1,0 +1,64 @@
+## Introduction
+This tutorial is for creating a spring cluster for microservices.
+
+## Create an Azure Spring Cloud instance
+
+An Azure Spring Cloud cluster can be created either using the Azure portal or the Azure CLI. In this first module, we will configure the necessary tools, and create our first cluster.
+
+## Set up the Azure CLI
+If it isn't already installed on your machine, install the Azure CLI. You can check the version of your current Azure CLI installation by running:
+
+
+```az --version```
+Ensure your Azure CLI is logged into your Azure subscription.
+
+
+```az login # Sign into an azure account```
+az account show # See the currently signed-in account.
+Ensure your default subscription is the one you intend to use for this lab, and if not, set the subscription using:
+
+```
+az account list
+az account set --subscription <SUBSCRIPTION_ID>
+```
+## Install the spring-cloud extension for Azure CLI, by running:
+
+```
+az extension add -n spring-cloud -y
+```
+Congratulations, the Azure CLI is now ready to create your first cluster!
+
+## Create an Azure Spring Cloud instance
+
+In this section, we will create our Azure Spring Cloud instance using Azure CLI. It is possible to do exactly the same configuration using the Azure portal.
+
+First, you will need to come up with a name for your Azure Spring Cloud instance.
+
+The name must be unique among all Azure Spring Cloud instances across all of Azure. Consider using your username as part of the name.
+The name can contain only lowercase letters, numbers and hyphens. The first character must be a letter. The last character must be a letter or number. The value must be between 4 and 32 characters long.
+To limit typing, set the variable RESOURCE_GROUP_NAME to the name of the resource group created in the previous section. Set the variable SPRING_CLOUD_NAME to the name of the Azure Spring Cloud instance to be created:
+
+```
+RESOURCE_GROUP_NAME=spring-cloud-workshop
+SPRING_CLOUD_NAME=azure-spring-cloud-workshop
+```
+
+Create resource group
+```
+az group create \
+    -g "$RESOURCE_GROUP_NAME" \
+    -l eastus
+```
+Create azure spring cloud instance
+```
+az spring-cloud create \
+    -g "$RESOURCE_GROUP_NAME" \
+    -n "$SPRING_CLOUD_NAME" \
+    --sku standard
+```
+
+Default variables
+```
+az configure --defaults group=${RESOURCE_GROUP_NAME}
+az configure --defaults spring-cloud=${SPRING_CLOUD_NAME}
+```
